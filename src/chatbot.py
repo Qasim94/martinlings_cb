@@ -97,8 +97,8 @@ def initialize_chatbot() -> Any:
         pdf_path = "docs/muhammad_martin_Lings.pdf"
         
         # Check if PDF exists
-        if not os.path.exists(pdf_path):
-            raise FileNotFoundError(f"PDF file not found at {pdf_path}. Please ensure the file is uploaded.")
+        # if not os.path.exists(pdf_path):
+            # raise FileNotFoundError(f"PDF file not found at {pdf_path}. Please ensure the file is uploaded.")
         
         # Load or create vectorstore
         vectorstore = load_or_create_vectorstore(pdf_path)

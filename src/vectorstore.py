@@ -44,70 +44,71 @@ def load_or_create_vectorstore(pdf_path: str) -> Any:
         except Exception as e:
             st.warning(f"⚠️ Could not load existing index: {str(e)}")
             st.info("🔄 Building new knowledge base...")
-    
+    else:
+        st.error("FAISS index not found.")    
     # Create new vectorstore
-    vectorstore = build_vectorstore(pdf_path)
-    return vectorstore
+    # vectorstore = build_vectorstore(pdf_path)
+    # return vectorstore
 
 
-def build_vectorstore(pdf_path: str) -> Any:
-    """
-    Build a new FAISS vectorstore from the PDF document.
+# def build_vectorstore(pdf_path: str) -> Any:
+#     """
+#     Build a new FAISS vectorstore from the PDF document.
     
-    Args:
-        pdf_path: Path to the PDF file
+#     Args:
+#         pdf_path: Path to the PDF file
         
-    Returns:
-        FAISS vectorstore instance
-    """
-    try:
-        # Create data directory if it doesn't exist
-        os.makedirs("data", exist_ok=True)
-        load_dotenv()  # This loads the .env file
-        # Load PDF
-        st.info("📖 Loading PDF document...")
-        loader = PyPDFLoader(pdf_path)
-        docs = loader.load()
-        st.success(f"✅ Loaded {len(docs)} pages from PDF")
+#     Returns:
+#         FAISS vectorstore instance
+#     """
+#     try:
+#         # Create data directory if it doesn't exist
+#         os.makedirs("data", exist_ok=True)
+#         # load_dotenv()  # This loads the .env file
+#         # Load PDF
+#         st.info("📖 Loading PDF document...")
+#         loader = PyPDFLoader(pdf_path)
+#         docs = loader.load()
+#         st.success(f"✅ Loaded {len(docs)} pages from PDF")
 
-        # Split documents into chunks
-        st.info("✂️ Splitting document into chunks...")
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200,
-            separators=["\n\n", "\n", ". ", "! ", "? ", ", ", " ", ""],
-        )
-        chunks = text_splitter.split_documents(docs)
-        st.success(f"✅ Created {len(chunks)} text chunks")
+#         # Split documents into chunks
+#         st.info("✂️ Splitting document into chunks...")
+#         text_splitter = RecursiveCharacterTextSplitter(
+#             chunk_size=1000,
+#             chunk_overlap=200,
+#             separators=["\n\n", "\n", ". ", "! ", "? ", ", ", " ", ""],
+#         )
+#         chunks = text_splitter.split_documents(docs)
+#         st.success(f"✅ Created {len(chunks)} text chunks")
 
-        # Create embeddings
-        st.info("🧠 Creating embeddings...")
-        embeddings = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
+#         # Create embeddings
+#         st.info("🧠 Creating embeddings...")
+#         embeddings = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
 
-        # Build FAISS index
-        st.info("🔍 Building search index...")
-        vectorstore = FAISS.from_documents(chunks, embeddings)
+#         # Build FAISS index
+#         st.info("🔍 Building search index...")
+#         vectorstore = FAISS.from_documents(chunks, embeddings)
 
-        # Save the index
-        index_path = "data/faiss_index"
-        vectorstore.save_local(index_path)
-        st.success("💾 Knowledge base saved successfully!")
+#         # Save the index
+#         index_path = "data/faiss_index"
+#         vectorstore.save_local(index_path)
+#         st.success("💾 Knowledge base saved successfully!")
 
-        # Calculate and display index size
-        try:
-            index_size = sum(
-                os.path.getsize(os.path.join(index_path, f)) 
-                for f in os.listdir(index_path)
-            )
-            st.info(f"📊 Index size: {index_size / (1024*1024):.1f} MB")
-        except:
-            pass
+#         # Calculate and display index size
+#         try:
+#             index_size = sum(
+#                 os.path.getsize(os.path.join(index_path, f)) 
+#                 for f in os.listdir(index_path)
+#             )
+#             st.info(f"📊 Index size: {index_size / (1024*1024):.1f} MB")
+#         except:
+#             pass
 
-        return vectorstore
+#         return vectorstore
 
-    except Exception as e:
-        st.error(f"❌ Error building vectorstore: {str(e)}")
-        raise e
+#     except Exception as e:
+#         st.error(f"❌ Error building vectorstore: {str(e)}")
+#         raise e
 
 
 def get_vectorstore_info(vectorstore) -> dict:
