@@ -1,0 +1,86 @@
+## .gitignore
+# Environment # Virtual environments
+env/
+cbt_venv/
+ML_CBT/cbt_venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# FAISS index is now included for deployment
+# data/faiss_index/
+# ML_CBT/data/faiss_index/
+
+# PDF files (might be too large for git)
+ML_CBT/docs/*.pdf
+ML_CBT/docs/*.pdfv
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# FAISS index (will be regenerated)
+# data/faiss_index/
+
+# PDF files (might be too large for git)
+docs/*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
