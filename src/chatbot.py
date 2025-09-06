@@ -40,7 +40,7 @@ def create_qa_chain(vectorstore):
     llm = ChatOpenAI(
         model="gpt-4o-mini",
         temperature=0,
-        openai_api_key=os.getenv("OPENAI_API_KEY"),
+        openai_api_key=st.secrets["OPENAI_API_KEY"],
         request_timeout=60
     )
 

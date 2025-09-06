@@ -32,7 +32,7 @@ def load_or_create_vectorstore(pdf_path: str) -> Any:
     if os.path.exists(index_path):
         try:
             st.info("📚 Loading existing knowledge base...")
-            embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
+            embeddings = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
             vectorstore = FAISS.load_local(
                 index_path, 
                 embeddings, 
@@ -82,7 +82,7 @@ def build_vectorstore(pdf_path: str) -> Any:
 
         # Create embeddings
         st.info("🧠 Creating embeddings...")
-        embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
+        embeddings = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
 
         # Build FAISS index
         st.info("🔍 Building search index...")
